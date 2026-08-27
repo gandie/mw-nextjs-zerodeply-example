@@ -6,12 +6,6 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -29,8 +23,36 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deployment to mittwald
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is configured for zero-configuration deployment to [mittwald](https://mittwald.de) using the [`mittwald/zerodeploy-action`](https://github.com/mittwald/zerodeploy-action) GitHub Action. This action is ideal for applications like this one that are built with AI development tools.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Prerequisites
+
+- **mStudio API Token**: Create or retrieve your API token from the [mittwald mStudio dashboard](https://mstudio.mittwald.de/)
+- **Project ID**: The mittwald project ID (format: `p-XXXXXX`) where you want to deploy
+
+### Setup
+
+1. Add your credentials as GitHub repository secrets:
+   - `MITTWALD_API_TOKEN`: Your mStudio API token
+   - `MITTWALD_PROJECT_ID`: Your mittwald project ID
+
+2. The deployment workflow is already configured in `.github/workflows/` and will automatically:
+   - Detect the project structure using Railpack
+   - Build and containerize the application
+   - Deploy to mittwald container hosting
+
+### How It Works
+
+The `zerodeploy-action` automatically determines the best way to build a Docker image from your source code without requiring a Dockerfile. It uses [Railpack](https://railpack.dev/) to infer build steps and deploys directly to mittwald with minimal configuration.
+
+### Deployment Triggers
+
+The workflow is triggered by:
+- Manual trigger via GitHub Actions `workflow_dispatch` 
+- Push events (configure as needed in your workflow file)
+
+### Additional Resources
+
+For detailed information about deployment options, advanced configurations, and troubleshooting, see the [mittwald container deployment guide](https://developer.mittwald.de/docs/v2/guides/deployment/container-actions/#deploy-with-zerodeploy-action).

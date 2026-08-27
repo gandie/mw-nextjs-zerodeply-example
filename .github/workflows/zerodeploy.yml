@@ -1,6 +1,9 @@
 name: Deploy to mittwald Container Hosting
 
 on:
+  push:
+    branches:
+      - master
   workflow_dispatch:
 
 jobs:
